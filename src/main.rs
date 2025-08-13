@@ -1,5 +1,7 @@
+use std::sync::Arc;
+
 use quest_tracker_rust_mastery::{
-    config::config_loader, infrastructure::postgres::postgres_connection,
+    config::config_loader, infrastructure::{axum_http::http_serve::start, postgres::postgres_connection},
 };
 use tracing::{error, info};
 
@@ -28,4 +30,6 @@ async fn main() {
     };
 
     info!("PostgreSQL connection established successfully");
+
+    start(Arc::new(dotenvy_env), Arc::new(postgres_pool)).await.expect("Failed to start server");
 }
