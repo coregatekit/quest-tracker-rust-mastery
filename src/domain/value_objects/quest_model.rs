@@ -8,7 +8,7 @@ use crate::domain::{
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct QuestModel {
-    pub id: String,
+    pub id: i32,
     pub name: String,
     pub description: Option<String>,
     pub status: String,
