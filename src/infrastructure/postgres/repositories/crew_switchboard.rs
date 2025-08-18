@@ -5,7 +5,7 @@ use axum::async_trait;
 
 use crate::{
     domain::{
-        repositories::crew_switchboard::CrewSwitchBoardRepository,
+        repositories::crew_switchboard::CrewSwitchboardRepository,
         value_objects::quest_adventurer_junction::QuestAdventurerJunction,
     },
     infrastructure::postgres::postgres_connection::PgPoolSquad,
@@ -22,7 +22,7 @@ impl CrewSwitchboardPostgres {
 }
 
 #[async_trait]
-impl CrewSwitchBoardRepository for CrewSwitchboardPostgres {
+impl CrewSwitchboardRepository for CrewSwitchboardPostgres {
     async fn join(&self, junction_body: QuestAdventurerJunction) -> Result<()> {
         unimplemented!("Method not implemented yet")
     }
