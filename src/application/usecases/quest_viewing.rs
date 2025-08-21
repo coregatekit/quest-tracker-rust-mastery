@@ -1,4 +1,4 @@
-use anyhow::Result;
+use anyhow::{Ok, Result};
 use std::sync::Arc;
 
 use crate::domain::{
@@ -23,11 +23,33 @@ where
         }
     }
 
-    async fn view_detail(&self, quest_id: i32) -> Result<QuestModel> {
-        unimplemented!("View detail method not implemented yet")
+    pub async fn view_detail(&self, quest_id: i32) -> Result<QuestModel> {
+        let result = self.quest_viewing_repository.view_detail(quest_id).await?;
+
+        let adventurers_count = self
+            .quest_viewing_repository
+            .adventurers_counting_by_quest_id(quest_id)
+            .await?;
+
+        let quest_model = result.to_model(adventurers_count);
+
+        Ok(quest_model)
     }
 
-    async fn board_checking(&self, filter: &BoardCheckingFilter) -> Result<Vec<QuestModel>> {
-        unimplemented!("Board checking method not implemented yet")
+    pub async fn board_checking(&self, filter: &BoardCheckingFilter) -> Result<Vec<QuestModel>> {
+        let results = self.quest_viewing_repository.board_checking(filter).await?;
+
+        let mut quests_model: Vec<QuestModel> = Vec::new();
+
+        for quest in results.into_iter() {
+            let adventurers_count = self
+                .quest_viewing_repository
+                .adventurers_counting_by_quest_id(quest.id)
+                .await?;
+
+            quests_model.push(quest.to_model(adventurers_count));
+        }
+
+        Ok(quests_model)
     }
 }
