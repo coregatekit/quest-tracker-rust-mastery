@@ -4,7 +4,6 @@ use mockall::automock;
 
 use crate::domain::{
     entities::guild_commanders::{GuildCommanderEntity, RegisterGuildCommanderEntity},
-    value_objects::guild_commander_model::RegisterGuildCommanderModel,
 };
 
 #[async_trait]
