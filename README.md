@@ -2,6 +2,12 @@
 
 ### Unit testing
 
+To run unit test use this command
+
+```bash
+cargo test
+```
+
 Install package `cargo-tarpaulin` for testing with code coverage
 
 ```bash
