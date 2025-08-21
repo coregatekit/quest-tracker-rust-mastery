@@ -3,6 +3,7 @@ use std::sync::Arc;
 use axum::{
     Extension, Router,
     extract::{Path, State},
+    http::StatusCode,
     middleware,
     response::IntoResponse,
     routing::patch,
@@ -49,6 +50,21 @@ where
     T1: JourneyLedgerRepository + Send + Sync,
     T2: QuestViewingRepository + Send + Sync,
 {
+    match journey_ledger_usecase
+        .in_journey(quest_id, guild_commander_id)
+        .await
+    {
+        Ok(result) => (
+            StatusCode::OK,
+            format!("Quest {} is now in journey", result),
+        )
+            .into_response(),
+        Err(e) => (
+            StatusCode::INTERNAL_SERVER_ERROR,
+            format!("Failed to put quest in journey: {}", e),
+        )
+            .into_response(),
+    }
 }
 
 pub async fn to_completed<T1, T2>(
@@ -60,6 +76,19 @@ where
     T1: JourneyLedgerRepository + Send + Sync,
     T2: QuestViewingRepository + Send + Sync,
 {
+    match journey_ledger_usecase
+        .to_completed(quest_id, guild_commander_id)
+        .await
+    {
+        Ok(result) => {
+            (StatusCode::OK, format!("Quest {} is now completed", result)).into_response()
+        }
+        Err(e) => (
+            StatusCode::INTERNAL_SERVER_ERROR,
+            format!("Failed to put quest in completed: {}", e),
+        )
+            .into_response(),
+    }
 }
 
 pub async fn to_failed<T1, T2>(
@@ -71,4 +100,15 @@ where
     T1: JourneyLedgerRepository + Send + Sync,
     T2: QuestViewingRepository + Send + Sync,
 {
+    match journey_ledger_usecase
+        .to_failed(quest_id, guild_commander_id)
+        .await
+    {
+        Ok(result) => (StatusCode::OK, format!("Quest {} is now failed", result)).into_response(),
+        Err(e) => (
+            StatusCode::INTERNAL_SERVER_ERROR,
+            format!("Failed to put quest in failed: {}", e),
+        )
+            .into_response(),
+    }
 }
