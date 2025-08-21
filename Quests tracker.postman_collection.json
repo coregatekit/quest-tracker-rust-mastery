@@ -1,0 +1,515 @@
+{
+	"info": {
+		"_postman_id": "c7663596-1e1f-4585-8cd0-985e17ed013c",
+		"name": "Quests tracker",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "6448111"
+	},
+	"item": [
+		{
+			"name": "adventurers",
+			"item": [
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"Hunterzzz\",\n    \"password\": \"Password!1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/adventurers",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"adventurers"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "guild commanders",
+			"item": [
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"guildmaster69\",\n    \"password\": \"Password!1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/guild-commanders",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"guild-commanders"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "authentication",
+			"item": [
+				{
+					"name": "adventurer login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"Hunterzzz\",\n    \"password\": \"Password!1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/authentication/adventurers/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"authentication",
+								"adventurers",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "adventurer refresh token",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"Hunterzzz\",\n    \"password\": \"Password!1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/authentication/adventurers/refresh-token",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"authentication",
+								"adventurers",
+								"refresh-token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "guild commander login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"guildmaster69\",\n    \"password\": \"Password!1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/authentication/guild-commanders/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"authentication",
+								"guild-commanders",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "guild commander refresh token",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"Hunterzzz\",\n    \"password\": \"Password!1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/authentication/guild-commanders/refresh-token",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"authentication",
+								"guild-commanders",
+								"refresh-token"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "quest ops",
+			"item": [
+				{
+					"name": "add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Mine the crystal from the cave\",\n    \"description\": \"A quest to find the lost artifact in the ancient ruins.\",\n    \"guild_commander_id\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/quest-ops",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"quest-ops"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "edit",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Retrieve the Lost Artifact\",\n    \"description\": \"A quest to find the lost artifact in the ancient ruins.\",\n    \"guild_commander_id\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/quest-ops/:quest_id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"quest-ops",
+								":quest_id"
+							],
+							"variable": [
+								{
+									"key": "quest_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "remove",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/quest-ops/:quest_id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"quest-ops",
+								":quest_id"
+							],
+							"variable": [
+								{
+									"key": "quest_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "quest viewing",
+			"item": [
+				{
+					"name": "view details",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/quest-viewing/:quest_id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"quest-viewing",
+								":quest_id"
+							],
+							"variable": [
+								{
+									"key": "quest_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "board checking",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/quest-viewing/board-checking?status=Open&name=Retrieve the Lost Artifact",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"quest-viewing",
+								"board-checking"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "Open"
+								},
+								{
+									"key": "name",
+									"value": "Retrieve the Lost Artifact"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "crew switchboard",
+			"item": [
+				{
+					"name": "join",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/crew-switchboard/join/:quest_id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"crew-switchboard",
+								"join",
+								":quest_id"
+							],
+							"variable": [
+								{
+									"key": "quest_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "leave",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/crew-switchboard/leave/:quest_id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"crew-switchboard",
+								"leave",
+								":quest_id"
+							],
+							"variable": [
+								{
+									"key": "quest_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "journey ledger",
+			"item": [
+				{
+					"name": "in journey",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/journey-ledger/in-journey/:quest_id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"journey-ledger",
+								"in-journey",
+								":quest_id"
+							],
+							"variable": [
+								{
+									"key": "quest_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "to completed",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/journey-ledger/to-completed/:quest_id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"journey-ledger",
+								"to-completed",
+								":quest_id"
+							],
+							"variable": [
+								{
+									"key": "quest_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "to failed",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/journey-ledger/to-failed/:quest_id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"journey-ledger",
+								"to-failed",
+								":quest_id"
+							],
+							"variable": [
+								{
+									"key": "quest_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "health check",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/health-check",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"health-check"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	]
+}
