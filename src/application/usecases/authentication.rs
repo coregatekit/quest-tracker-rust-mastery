@@ -78,7 +78,33 @@ where
     }
 
     pub async fn adventurers_refresh_token(&self, refresh_token: String) -> Result<Passport> {
-        unimplemented!("Adventurers refresh token method not implemented yet")
+        let secret_env = get_adventurers_secret_env()?;
+
+        let claims = jwt_authentication::verify_token(secret_env.refresh_secret.clone(), refresh_token)?;
+
+        let access_token_claims = Claims {
+            sub: claims.sub.clone(),
+            role: Roles::Adventurer,
+            exp: (Utc::now() + Duration::days(1)).timestamp() as usize,
+            iat: Utc::now().timestamp() as usize,
+        };
+
+        let refresh_token_claims = Claims {
+            sub: claims.sub,
+            role: Roles::Adventurer,
+            exp: claims.exp,
+            iat: Utc::now().timestamp() as usize,
+        };
+
+        let access_token =
+            jwt_authentication::generate_jwt(secret_env.secret, &access_token_claims)?;
+        let refresh_token =
+            jwt_authentication::generate_jwt(secret_env.refresh_secret, &refresh_token_claims)?;
+
+        Ok(Passport {
+            access_token,
+            refresh_token,
+        })
     }
 
     pub async fn guild_commanders_login(&self, login_model: LoginModel) -> Result<Passport> {
@@ -121,6 +147,32 @@ where
     }
 
     pub async fn guild_commanders_refresh_token(&self, refresh_token: String) -> Result<Passport> {
-        unimplemented!("Guild Commanders refresh token method not implemented yet")
+        let secret_env = get_guild_commanders_secret_env()?;
+
+        let claims = jwt_authentication::verify_token(secret_env.refresh_secret.clone(), refresh_token)?;
+
+        let access_token_claims = Claims {
+            sub: claims.sub.clone(),
+            role: Roles::GuildCommander,
+            exp: (Utc::now() + Duration::days(1)).timestamp() as usize,
+            iat: Utc::now().timestamp() as usize,
+        };
+
+        let refresh_token_claims = Claims {
+            sub: claims.sub,
+            role: Roles::GuildCommander,
+            exp: claims.exp,
+            iat: Utc::now().timestamp() as usize,
+        };
+
+        let access_token =
+            jwt_authentication::generate_jwt(secret_env.secret, &access_token_claims)?;
+        let refresh_token =
+            jwt_authentication::generate_jwt(secret_env.refresh_secret, &refresh_token_claims)?;
+
+        Ok(Passport {
+            access_token,
+            refresh_token,
+        })
     }
 }
