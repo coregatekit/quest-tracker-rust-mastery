@@ -1,8 +1,9 @@
 use std::sync::Arc;
 
 use axum::{
-    Extension, Router,
+    Extension, Json, Router,
     extract::{Path, State},
+    http::StatusCode,
     middleware,
     response::IntoResponse,
     routing::{delete, patch, post},
@@ -10,7 +11,10 @@ use axum::{
 
 use crate::{
     application::usecases::quest_ops::QuestOpsUseCase,
-    domain::repositories::{quest_ops::QuestOpsRepository, quest_viewing::QuestViewingRepository},
+    domain::{
+        repositories::{quest_ops::QuestOpsRepository, quest_viewing::QuestViewingRepository},
+        value_objects::quest_model::{AddQuestModel, EditQuestModel},
+    },
     infrastructure::{
         axum_http::middlewares::guild_commanders_authorization,
         postgres::{
@@ -39,23 +43,44 @@ pub fn routes(db_pool: Arc<PgPoolSquad>) -> Router {
 pub async fn add<T1, T2>(
     State(quest_ops_usecase): State<Arc<QuestOpsUseCase<T1, T2>>>,
     Extension(guild_commander_id): Extension<i32>,
-    Path(quest_id): Path<i32>,
+    Json(add_quest_model): Json<AddQuestModel>,
 ) -> impl IntoResponse
 where
     T1: QuestOpsRepository + Send + Sync,
     T2: QuestViewingRepository + Send + Sync,
 {
+    match quest_ops_usecase
+        .add(guild_commander_id, add_quest_model)
+        .await
+    {
+        Ok(quest_id) => {
+            let response = format!("Add quest success with id: {}", quest_id);
+            (StatusCode::OK, response)
+        }
+        Err(e) => (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()),
+    }
 }
 
 pub async fn edit<T1, T2>(
     State(quest_ops_usecase): State<Arc<QuestOpsUseCase<T1, T2>>>,
     Extension(guild_commander_id): Extension<i32>,
     Path(quest_id): Path<i32>,
+    Json(edit_quest_model): Json<EditQuestModel>,
 ) -> impl IntoResponse
 where
     T1: QuestOpsRepository + Send + Sync,
     T2: QuestViewingRepository + Send + Sync,
 {
+    match quest_ops_usecase
+        .edit(quest_id, guild_commander_id, edit_quest_model)
+        .await
+    {
+        Ok(quest_id) => {
+            let response = format!("Edit quest success with id: {}", quest_id);
+            (StatusCode::OK, response)
+        }
+        Err(e) => (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()),
+    }
 }
 
 pub async fn remove<T1, T2>(
@@ -67,4 +92,14 @@ where
     T1: QuestOpsRepository + Send + Sync,
     T2: QuestViewingRepository + Send + Sync,
 {
+    match quest_ops_usecase
+        .remove(quest_id, guild_commander_id)
+        .await
+    {
+        Ok(_) => {
+            let response = format!("Remove quest success with id: {}", quest_id);
+            (StatusCode::OK, response)
+        }
+        Err(e) => (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()),
+    }
 }
