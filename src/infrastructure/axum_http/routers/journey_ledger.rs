@@ -10,7 +10,7 @@ use axum::{
 };
 
 use crate::{
-    application::usecases::journey_ledeger::JourneyLedgersUseCase,
+    application::usecases::journey_ledger::JourneyLedgersUseCase,
     domain::repositories::{
         journey_ledger::JourneyLedgerRepository, quest_viewing::QuestViewingRepository,
     },
